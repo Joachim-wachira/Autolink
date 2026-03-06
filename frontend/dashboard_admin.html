@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Autolink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page admin">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <i class="fas fa-car"></i>
+            <span>AUTOLINK ADMIN</span>
+        </div>
+        <div class="nav-actions">
+            <button class="icon-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="admin-sidebar">
+            <a href="#" class="active" data-section="overview">
+                <i class="fas fa-chart-line"></i> Overview
+            </a>
+            <a href="#" data-section="users">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <a href="#" data-section="chats">
+                <i class="fas fa-comments"></i> Chats
+            </a>
+            <a href="#" data-section="notifications">
+                <i class="fas fa-bell"></i> Notifications
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overviewSection" class="admin-section">
+                <h2>Platform Overview</h2>
+                <div class="stats-grid large">
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-info">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-user"></i>
+                        <div class="stat-info">
+                            <h3 id="totalDrivers">0</h3>
+                            <p>Drivers</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-wrench"></i>
+                        <div class="stat-info">
+                            <h3 id="totalMechanics">0</h3>
+                            <p>Mechanics</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <i class="fas fa-store"></i>
+                        <div class="stat-info">
+                            <h3 id="totalShops">0</h3>
+                            <p>Shops</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container glass-card">
+                    <h3>User Activity</h3>
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="usersSection" class="admin-section hidden">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchUsers" placeholder="Search users...">
+                    </div>
+                </div>
+                <div class="table-container glass-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- Users loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Chats Section -->
+            <section id="chatsSection" class="admin-section hidden">
+                <h2>Chat Monitoring</h2>
+                <div class="chat-monitor glass-card">
+                    <div class="chat-list" id="adminChatList"></div>
+                    <div class="chat-viewer" id="adminChatViewer">
+                        <p class="empty-state">Select a conversation to view</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications Section -->
+            <section id="notificationsSection" class="admin-section hidden">
+                <h2>Send Notification</h2>
+                <div class="notification-form glass-card">
+                    <div class="form-group">
+                        <label>Target Audience</label>
+                        <select id="notificationTarget">
+                            <option value="all">All Users</option>
+                            <option value="drivers">Drivers Only</option>
+                            <option value="mechanics">Mechanics Only</option>
+                            <option value="shops">Shop Owners Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="notificationTitle" placeholder="Notification title">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="notificationBody" rows="4" placeholder="Enter your message..."></textarea>
+                    </div>
+                    <button onclick="sendNotification()" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Notification
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('admin');
+            loadAdminStats();
+            setupAdminNavigation();
+        });
+    </script>
+</body>
+</html>

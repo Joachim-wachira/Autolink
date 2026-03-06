@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard - Autolink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <i class="fas fa-car"></i>
+            <span>AUTOLINK</span>
+        </div>
+        <div class="nav-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchTown" placeholder="Search by town...">
+        </div>
+        <div class="nav-actions">
+            <button class="icon-btn" id="notificationsBtn">
+                <i class="fas fa-bell"></i>
+                <span class="badge hidden">0</span>
+            </button>
+            <button class="icon-btn" id="aiAssistantBtn">
+                <i class="fas fa-robot"></i>
+            </button>
+            <div class="user-menu">
+                <img id="userAvatar" src="" alt="Profile" class="avatar">
+                <div class="dropdown">
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Filters</h3>
+            </div>
+            
+            <div class="filter-section">
+                <label>Search Radius</label>
+                <div class="range-slider">
+                    <input type="range" id="radiusSlider" min="1" max="50" value="10">
+                    <span id="radiusValue">10 km</span>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <label>Provider Type</label>
+                <div class="checkbox-group">
+                    <label class="checkbox">
+                        <input type="checkbox" checked value="mechanic">
+                        <span>Mechanics</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" checked value="shop_owner">
+                        <span>Spare Parts</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <label>Minimum Rating</label>
+                <div class="star-filter">
+                    <button data-rating="1"><i class="fas fa-star"></i></button>
+                    <button data-rating="2"><i class="fas fa-star"></i></button>
+                    <button data-rating="3"><i class="fas fa-star"></i></button>
+                    <button data-rating="4"><i class="fas fa-star"></i></button>
+                    <button data-rating="5"><i class="fas fa-star"></i></button>
+                </div>
+            </div>
+
+            <button id="updateLocation" class="btn-secondary btn-full">
+                <i class="fas fa-location-arrow"></i>
+                Update Location
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h2>Nearby Mechanics & Shops</h2>
+                <div class="view-toggle">
+                    <button class="active" data-view="list"><i class="fas fa-list"></i></button>
+                    <button data-view="map"><i class="fas fa-map"></i></button>
+                </div>
+            </div>
+
+            <div id="providersList" class="providers-grid">
+                <!-- Providers loaded dynamically -->
+            </div>
+
+            <div id="mapView" class="map-view hidden">
+                <div id="map" class="full-map"></div>
+            </div>
+        </main>
+
+        <aside class="chat-sidebar">
+            <div class="chat-header">
+                <h3>Messages</h3>
+                <span id="unreadCount" class="badge hidden">0</span>
+            </div>
+            <div id="conversationsList" class="conversations-list">
+                <!-- Conversations loaded dynamically -->
+            </div>
+        </aside>
+    </div>
+    <!-- AI Assistant Modal -->
+    <div id="aiModal" class="modal">
+        <div class="modal-content glass-card ai-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-robot"></i> AI Car Assistant</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="ai-chat-container">
+                <div id="aiMessages" class="ai-messages">
+                    <div class="ai-message bot">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Hello! I'm your AI car assistant. Describe your car problem and I'll help you understand possible causes, safety measures, and urgency level.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-input-area">
+                    <input type="text" id="aiInput" placeholder="Describe your car problem...">
+                    <button id="sendAiMessage" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chatModal" class="modal chat-modal">
+        <div class="modal-content glass-card chat-card">
+            <div class="chat-header">
+                <div class="chat-user-info">
+                    <img id="chatUserAvatar" src="" alt="" class="avatar">
+                    <div>
+                        <h4 id="chatUserName"></h4>
+                        <span id="chatUserStatus" class="status offline">Offline</span>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button id="callBtn" class="icon-btn"><i class="fas fa-phone"></i></button>
+                    <button id="navigateBtn" class="icon-btn"><i class="fas fa-directions"></i></button>
+                    <button class="close-modal icon-btn">&times;</button>
+                </div>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-area">
+                <div class="typing-indicator hidden">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="input-wrapper">
+                    <button class="attach-btn"><i class="fas fa-paperclip"></i></button>
+                    <input type="text" id="messageInput" placeholder="Type a message...">
+                    <button id="sendMessage" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAw4MDkL6zMbyI4Quln--ym8ZXL7UsDDb0&libraries=places"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/maps.js"></script>
+    <script>
+        // Driver dashboard specific code
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('driver');
+            loadNearbyProviders();
+            setupFilters();
+            setupAIAssistant();
+        });
+    </script>
+</body>
+</html>

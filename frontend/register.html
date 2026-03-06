@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Autolink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card glass-card">
+            <div class="auth-header">
+                <div class="logo-ring small">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Join Autolink today</p>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label>I am a</label>
+                    <div class="role-selector">
+                        <button type="button" class="role-btn active" data-role="driver">
+                            <i class="fas fa-user"></i>
+                            <span>Driver</span>
+                        </button>
+                        <button type="button" class="role-btn" data-role="mechanic">
+                            <i class="fas fa-wrench"></i>
+                            <span>Mechanic</span>
+                        </button>
+                        <button type="button" class="role-btn" data-role="shop_owner">
+                            <i class="fas fa-store"></i>
+                            <span>Shop Owner</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="role" name="role" value="driver">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="full_name" name="full_name" required placeholder="John Doe">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" name="phone" required placeholder="+254 700 000000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" required placeholder="••••••••">
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group provider-fields hidden">
+                    <label for="business_name">Business Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-building"></i>
+                        <input type="text" id="business_name" name="business_name" placeholder="Joe's Garage">
+                    </div>
+                </div>
+
+                <div class="form-group provider-fields hidden">
+                    <label for="specialization">Specialization</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-cogs"></i>
+                        <input type="text" id="specialization" name="specialization" placeholder="Engine repair, brakes...">
+                    </div>
+                </div>
+
+                <div class="form-group location-group">
+                    <label>Location</label>
+                    <div class="location-inputs">
+                        <button type="button" id="detectLocation" class="btn-location">
+                            <i class="fas fa-location-arrow"></i>
+                            <span>Detect My Location</span>
+                        </button>
+                        <div class="or-divider">OR</div>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location_name" name="location_name" placeholder="Enter town/area name">
+                        </div>
+                    </div>
+                    <div id="locationStatus" class="location-status"></div>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile_picture">Profile Picture</label>
+                    <div class="file-upload">
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                        <label for="profile_picture" class="file-label">
+                            <i class="fas fa-camera"></i>
+                            <span>Choose Photo</span>
+                        </label>
+                        <span class="file-name">No file chosen</span>
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full">
+                    <span>Create Account</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="spinner hidden"></div>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="mapModal" class="modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Select Location</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="map" class="map-container"></div>
+            <div class="modal-footer">
+                <button id="confirmLocation" class="btn-primary">Confirm Location</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAw4MDkL6zMbyI4Quln--ym8ZXL7UsDDb0&callback=initMap" async defer></script>
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

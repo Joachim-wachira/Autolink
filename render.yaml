@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: autolink-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: autolink-db
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: app.py
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+    rootDir: backend
+
+  - type: web
+    name: autolink-frontend
+    env: python
+    plan: free
+    buildCommand: chmod +x generate-config.sh && ./generate-config.sh && echo "Frontend ready"
+    startCommand: python -m http.server 3000
+    rootDir: frontend
+
+databases:
+  - name: autolink-db
+    plan: free

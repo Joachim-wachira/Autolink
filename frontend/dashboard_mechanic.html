@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mechanic Dashboard - Autolink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <i class="fas fa-car"></i>
+            <span>AUTOLINK</span>
+        </div>
+        <div class="nav-actions">
+            <div class="availability-toggle">
+                <span>Available</span>
+                <label class="switch">
+                    <input type="checkbox" id="availabilitySwitch" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <button class="icon-btn" id="notificationsBtn">
+                <i class="fas fa-bell"></i>
+                <span class="badge hidden">0</span>
+            </button>
+            <div class="user-menu">
+                <img id="userAvatar" src="" alt="Profile" class="avatar">
+                <div class="dropdown">
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <main class="main-content full-width">
+            <div class="stats-grid">
+                <div class="stat-card glass-card">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-info">
+                        <h3 id="avgRating">0.0</h3>
+                        <p>Average Rating</p>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <i class="fas fa-comments"></i>
+                    <div class="stat-info">
+                        <h3 id="totalChats">0</h3>
+                        <p>Total Chats</p>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <i class="fas fa-eye"></i>
+                    <div class="stat-info">
+                        <h3 id="profileViews">0</h3>
+                        <p>Profile Views</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Incoming Requests</h2>
+                <div id="requestsList" class="requests-list">
+                    <!-- Requests loaded dynamically -->
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Recent Conversations</h2>
+                <div id="conversationsList" class="conversations-list">
+                    <!-- Conversations loaded dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chatModal" class="modal chat-modal">
+        <div class="modal-content glass-card chat-card">
+            <div class="chat-header">
+                <div class="chat-user-info">
+                    <img id="chatUserAvatar" src="" alt="" class="avatar">
+                    <div>
+                        <h4 id="chatUserName"></h4>
+                        <span id="chatUserStatus" class="status offline">Offline</span>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button id="callBtn" class="icon-btn"><i class="fas fa-phone"></i></button>
+                    <button class="close-modal icon-btn">&times;</button>
+                </div>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-area">
+                <div class="typing-indicator hidden">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="messageInput" placeholder="Type a message...">
+                    <button id="sendMessage" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chat.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('mechanic');
+            setupAvailabilityToggle();
+            loadMechanicStats();
+            loadConversations();
+        });
+    </script>
+</body>
+</html>
