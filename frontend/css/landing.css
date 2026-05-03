@@ -137,19 +137,19 @@
     background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
 }
 
-.btn-mechanic {
+.btn btn-mechanic {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
-.btn-mechanic:hover {
+.btn btn-mechanic:hover {
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
 }
 
-.btn-spareshop {
+.btn btn-spareshop {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.btn-spareshop:hover {
+.btn btn-spareshop:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
