@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register as Spareshop - Autolink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card glass-card">
+            <div class="auth-header">
+                <div class="logo-ring small">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h2>Spareshop Registration</h2>
+                <p>Join our network of trusted spare parts dealers</p>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name">Owner Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="full_name" name="full_name" required placeholder="John Doe">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" name="phone" required placeholder="+254 700 000000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="business_name">Business Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-building"></i>
+                            <input type="text" id="business_name" name="business_name" required placeholder="Auto Parts Store">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="specialization">Product Categories</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-box"></i>
+                            <input type="text" id="specialization" name="specialization" required placeholder="e.g., Engine Parts, Filters, Accessories">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" required placeholder="••••••••">
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group location-group">
+                    <label>Location</label>
+                    <div class="location-inputs">
+                        <button type="button" id="detectLocation" class="btn-location">
+                            <i class="fas fa-location-arrow"></i>
+                            <span>Detect My Location</span>
+                        </button>
+                        <div class="or-divider">OR</div>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location_name" name="location_name" required placeholder="Enter town/area name">
+                        </div>
+                    </div>
+                    <div id="locationStatus" class="location-status"></div>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile_picture">Shop Logo</label>
+                    <div class="file-upload">
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                        <label for="profile_picture" class="file-label">
+                            <i class="fas fa-camera"></i>
+                            <span>Choose Logo</span>
+                        </label>
+                        <span class="file-name">No file chosen</span>
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full">
+                    <span>Create Account</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login_spareshop.html">Login</a> | <a href="index.html">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
