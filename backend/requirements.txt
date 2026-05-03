@@ -11,10 +11,11 @@ bcrypt==4.0.1
 psycopg2-binary==2.9.9
 python-dotenv==1.0.0
 geopy==2.4.0
-geographiclib==2.0
 requests==2.31.0
 eventlet==0.33.3
 gunicorn==21.2.0
 redis==5.0.1
 Pillow==10.1.0
+twilio==8.10.0
+stripe==7.8.0
 marshmallow==3.20.1
