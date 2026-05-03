@@ -2,13 +2,12 @@ from flask import Blueprint, request, jsonify
 from flask_socketio import emit, join_room, leave_room
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from . import socketio, db
-from .models import User, Message, ChatRoom, Notification
+from .models import User, Message, Notification
 from datetime import datetime
 import json
 
 chat_bp = Blueprint('chat', __name__)
 
-# Store online users
 online_users = {}
 
 @socketio.on('connect')
@@ -24,10 +23,8 @@ def handle_disconnect():
             user.is_online = False
             user.last_seen = datetime.utcnow()
             db.session.commit()
-            # Notify others
             emit('user_offline', {'user_id': user_id}, broadcast=True)
         del online_users[request.sid]
-    print('Client disconnected')
 
 @socketio.on('authenticate')
 def handle_authenticate(data):
@@ -90,7 +87,6 @@ def handle_send_message(data):
     content = data.get('content')
     message_type = data.get('message_type', 'text')
     
-    # Save message
     message = Message(
         sender_id=user_id,
         receiver_id=receiver_id,
@@ -101,16 +97,14 @@ def handle_send_message(data):
     db.session.commit()
     
     room_id = f"chat_{min(user_id, receiver_id)}_{max(user_id, receiver_id)}"
-    
-    # Send to receiver if online
     emit('new_message', message.to_dict(), room=room_id)
     
-    # Send notification to receiver
+    # Send notification
     receiver_room = f"user_{receiver_id}"
     emit('notification', {
         'type': 'chat',
         'title': 'New Message',
-        'body': f"You have a new message",
+        'body': 'You have a new message',
         'data': {'sender_id': user_id, 'message_id': message.id}
     }, room=receiver_room)
     
@@ -146,7 +140,6 @@ def handle_stop_typing(data):
 def get_conversations():
     current_user_id = get_jwt_identity()
     
-    # Get unique conversations
     sent_to = db.session.query(Message.receiver_id).filter(
         Message.sender_id == current_user_id
     ).distinct().all()
