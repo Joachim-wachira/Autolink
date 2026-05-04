@@ -1,0 +1,86 @@
+/* ============================================
+   AUTOLINK - COMPLETE STYLESHEET (MERGED)
+   Premium Glassmorphism & Unified Button Design
+   ============================================ */
+:root {
+    /* Existing Design Tokens */
+    --primary: #f59e0b;
+    --primary-dark: #d97706;
+    --primary-light: #fbbf24;
+    --primary-glow: rgba(245, 158, 11, 0.3);
+    --secondary: #1e293b;
+    --accent: #3b82f6;
+    --accent-dark: #2563eb;
+    --success: #10b981;
+    --success-dark: #059669;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --danger-dark: #dc2626;
+    --info: #3b82f6;
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --bg-card: rgba(30, 41, 59, 0.6);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --bg-glass-hover: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-inverse: #0f172a;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px var(--primary-glow);
+    --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem; --space-lg: 1.5rem;
+    --space-xl: 2rem; --space-2xl: 3rem; --space-3xl: 4rem;
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --transition-fast: 150ms ease; --transition-base: 300ms ease; --transition-slow: 500ms ease;
+    --z-dropdown: 100; --z-sticky: 200; --z-modal: 1000; --z-toast: 2000;
+    /* Landing/Landing Button Colors as per image */
+    --btn-driver: #2196F3;
+    --btn-mechanic: #ff9800;
+    --btn-spareshop: #4CAF50;
+}
+/* --- Base Reset, Layout, Typography, Forms, Cards, etc. (previous style.css content remains here) --- */
+/* BUTTON GROUP to unify on landing + all pages: */
+.button-group .btn {
+  padding: 0.9em 2em;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  margin: 0 0.5rem 1rem 0;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  box-shadow: 0 2px 16px rgba(44,44,64,0.10);
+}
+.button-group .btn-driver { background: var(--btn-driver); }
+.button-group .btn-mechanic { background: var(--btn-mechanic); }
+.button-group .btn-spareshop { background: var(--btn-spareshop); }
+.button-group .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.hero-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+  background: #fff4;
+  border-radius: 100px;
+  display: block;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,.13);
+}
+.footer {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+  background: rgba(44,44,64,0.08);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  position: relative;
+  left: 0; bottom: 0;
+  z-index: 8000;
+}
